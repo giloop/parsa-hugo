@@ -5,9 +5,9 @@ description: "This is meta description"
 type: "featured"
 image: "images/featured-post/post-2.jpg"
 categories: 
-  - "Philosophy"
+  - "Réflexions"
 tags:
-  - "Philosophy"
+  - "Réflexions"
   - "Photos"
 ---
 

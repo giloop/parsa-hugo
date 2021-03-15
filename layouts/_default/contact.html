@@ -7,9 +7,9 @@
         <h2 class="mb-4">{{.Title }}</h2>
         <img src="{{.Params.Image | absURL }}" alt="{{site.Params.author}}" class="img-fluid w-100 mb-4">
         {{ .Content }}
-        <form action="{{ site.Params.contact_form_action }}" class="row mt-5">
+        <form action="{{ site.Params.contact_form_action }}" method="POST" class="row mt-5">
           <div class="col-lg-6">
-            <input type="text" class="form-control mb-4" name="name" id="name" placeholder="Name">
+            <input type="text" class="form-control mb-4" name="name" id="name" placeholder="Nom">
           </div>
           <div class="col-lg-6">
             <input type="email" class="form-control mb-4" name="email" id="email" placeholder="Email">
@@ -18,7 +18,7 @@
             <textarea name="message" id="message" class="form-control mb-4" placeholder="Message..."></textarea>
           </div>
           <div class="col-12">
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" type="submit">Envoyer</button>
           </div>
         </form>
       </div>

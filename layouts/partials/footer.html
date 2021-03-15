@@ -1,4 +1,4 @@
-<footer class="bg-secondary">
+<footer>
   <div class="section">
     <div class="container">
       <div class="row">
@@ -29,8 +29,8 @@
         <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
           <h6>Follow</h6>
           <ul class="list-inline d-inline-block">
-            {{ range site.Params.social }}
-            <li class="list-inline-item"><a href="{{ .URL }}" class="text-dark"><i class="{{ .icon }}"></i></a></li>
+            {{ range .Site.Params.social }}
+            <li class="list-inline-item"><a href="{{ .url }}" class="text-dark"><i class="{{ .icon }}"></i></a></li>
             {{ end }}
           </ul>
         </div>
@@ -47,12 +47,19 @@
 {{ range site.Params.plugins.js}}
 <script src="{{ .link | absURL }}"></script>
 {{ end }}
+{{- if .HasShortcode "img-lightbox-gallery" }}
+<script src="{{ "plugins/lightbox/js/lightbox.min.js" | absURL }} "></script>
+{{- end }}
 
 {{ "<!-- Main Script -->" | safeHTML }}
 {{ $script := resources.Get "js/script.js" | minify}}
 <script src="{{ $script.Permalink }}"></script>
 
-
+{{- with eq site.Params.logo "images/Texte-Gilles-Gonon.svg" }}
+{{ $script := resources.Get "js/anim-logo.js" | minify}}
+<script src="{{ $script.Permalink }}"></script>
+  
+{{- end }}
 <!-- cookie -->
 {{ if site.Params.cookies.enable }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
@@ -95,3 +102,36 @@
 }
 </style>
 {{ end }}
+
+{{- if (or (.HasShortcode "img-gallery") (.HasShortcode "masonry-gallery")) }}
+<script>
+	(function ($) {
+    // Initialisation du plugin venobox
+    
+    $('.venobox').venobox({
+      infinigall: true,
+      border : '20px',
+      titleattr: 'data-title',
+      share: [ 'facebook', 'twitter', 'linkedin', 'pinterest', 'download' ],
+      spinner : 'three-bounce'
+    });
+	})(jQuery);
+</script>
+{{- end }}
+
+
+{{- if .HasShortcode "masonry-gallery" }}
+<script>
+	(function ($) {
+    // Initialisation Masonry 
+    $('.grid').masonry({
+      // set itemSelector so .grid-sizer is not used in layout
+      itemSelector: '.grid-item',
+      // use element for option
+      columnWidth: '.grid-sizer',
+      percentPosition: true
+    })
+  })(jQuery);
+</script>
+{{- end }}
+

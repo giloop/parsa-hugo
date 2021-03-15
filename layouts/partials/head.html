@@ -7,15 +7,25 @@
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}">
   {{ with site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
   {{ hugo.Generator }}
-
+  
   {{ "<!-- plugins -->" | safeHTML }}
   {{ range site.Params.plugins.css }}
   <link rel="stylesheet" href="{{ .link | absURL }} ">
   {{ end }}
 
+  {{- if .HasShortcode "img-lightbox-gallery" }}
+  <link rel="stylesheet" href="{{ "plugins/lightbox/css/lightbox.min.css" |absURL }}">
+  {{- end }}
+
   {{ "<!-- Main Stylesheet -->" | safeHTML }}
   {{ $styles := resources.Get "css/style.css" | minify }}
   <link rel="stylesheet" href="{{ $styles.Permalink }}" media="screen">
+
+  {{ with site.Params.custom_css }}
+  {{ range site.Params.custom_css }}
+  <link rel="stylesheet" href="{{ . | absURL }}" media="screen">
+  {{ end }}
+  {{ end }}
 
   {{ "<!--Favicon-->" | safeHTML }}
   <link rel="shortcut icon" href="{{ `images/favicon.png` | absURL }} " type="image/x-icon">
